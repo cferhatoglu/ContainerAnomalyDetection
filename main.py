@@ -47,9 +47,6 @@ print("\nClassification Report:")
 print(classification_report(test_labels, predictions))
 
 
-
-
-
 # Split data into normal and anomaly subsets
 normal_data = data[labels == 0]
 anomaly_data = data[labels == 1]
@@ -66,17 +63,17 @@ train_labels_subset = train_data_subset['is_anomaly']
 
 scaled_train_features_subset = scaler.fit_transform(train_features_subset)
 
-# Train Isolation Forest using the subset
+# Train Isolation Forest using subset
 print("Isolation Forest Model Outcome with Subset:")
 print(" ")
 iso_forest = IsolationForest(n_estimators=100, contamination=0.05, random_state=42)
 iso_forest.fit(scaled_train_features_subset)
 
-# Predict anomalies on the entire dataset
+# Predict anomalies for the entire dataset
 iso_predictions = iso_forest.predict(test_features)
 iso_predictions = np.where(iso_predictions == -1, 1, 0)
 
-# Evaluate the Isolation Forest model
+# Evaluate Isolation Forest 
 print("Confusion Matrix (Isolation Forest with Subset):")
 print(confusion_matrix(test_labels, iso_predictions))
 print("\nClassification Report (Isolation Forest with Subset):")
